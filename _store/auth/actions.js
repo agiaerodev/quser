@@ -73,7 +73,7 @@ export const AUTH_SUCCESS = ({ commit, dispatch, state }, data = false) => {
         }
         commit('SET_AUTHENTICATED')
         await dispatch('SET_ORGANIZATION')//Set settings
-        await getTokenFirebase(data.userData.id);
+        getTokenFirebase(data.userData.id).then(token => {});
         new notificationPlugin(store);
         return resolve(true)//Resolve
       } else {
