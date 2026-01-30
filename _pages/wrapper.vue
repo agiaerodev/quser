@@ -19,7 +19,7 @@
             <!--Auth Type-->
             <div class="q-mb-md">
               <!--Loggin-->
-              <div v-if="allowLocalLogin">
+              <div v-if="true">
                 <div v-if="modeAuthType === 'withPassword'">
                   <login-form v-if="authType == 'login'" @logged="checkAfterLogin()" class="full-width"/>
                   <!--Register-->
