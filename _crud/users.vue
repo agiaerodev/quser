@@ -203,13 +203,13 @@ export default {
             },
           },
           isActivated: {
-            value: '1',
+            value: true,
             type: 'select',
             props: {
               label: `${this.$tr('isite.cms.form.status')}:`,
               options: [
-                {label: this.$tr('isite.cms.label.enabled'), value: '1'},
-                {label: this.$tr('isite.cms.label.disabled'), value: '0'},
+                {label: this.$tr('isite.cms.label.enabled'), value: true},
+                {label: this.$tr('isite.cms.label.disabled'), value: false},
               ],
             }
           },
