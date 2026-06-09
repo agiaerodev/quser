@@ -69,7 +69,8 @@ export default {
             },
             {
               name: 'isActivated', label: this.$tr('isite.cms.form.status'), field: 'isActivated',
-              asStatus: true
+              asStatus: true,
+              asStatusBoolean: true
             },
             {
               name: 'roles', label: this.$trp('isite.cms.label.role'), field: 'roles',
