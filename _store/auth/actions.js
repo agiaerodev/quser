@@ -518,3 +518,44 @@ export const SET_ORGANIZATION = ({ commit, dispatch, state }, params = {}) => {
     resolve(true)
   })
 }
+
+
+
+
+//Refresh user Data by token
+export const AUTH_WITH_TOKEN = ({ commit, dispatch, state }, token = '') => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      //Set user token to axios
+      const userToken = token.includes('Bearer') ? token : `Bearer ${token}`
+      axios.defaults.headers.common['Authorization'] = userToken
+      //Request params
+      let params = {
+        refresh: true,
+        params: { include: 'organizations' }
+      }
+
+      //Get userData
+      crud.index('apiRoutes.quser.me', params).then(async response => {
+        if (response.status != 200) return reject(true)//Logout
+        const sessionData = {
+          userData: response.data.userData//Update userData of sessiondata 
+        }
+        
+        await cache.set('sessionData', sessionData)//Update sessionData in cache
+        
+        //await dispatch('AUTH_SUCCESS')//Auth success
+
+        resolve(true)
+      }).catch(error => {
+        apiResponse.handleError(error, () => {
+          console.error('[AUTH_UPDATE] ', error)
+        })
+        reject(true)
+      })
+    } catch (e) {
+      console.error('[AUTH UPDATE] ', e)
+      reject(e)
+    }
+  })
+}
