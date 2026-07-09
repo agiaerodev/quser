@@ -542,11 +542,10 @@ export const AUTH_WITH_TOKEN = ({ commit, dispatch, state }, token = '') => {
           userData: response.data.userData//Update userData of sessiondata 
         }
         
-        await cache.set('sessionData', sessionData)//Update sessionData in cache
-        
+        await cache.set('sessionData', sessionData)//Update sessionData in cache        
         //await dispatch('AUTH_SUCCESS')//Auth success
-
-        resolve(true)
+        commit('SET_AUTHENTICATED')
+        resolve(sessionData)
       }).catch(error => {
         apiResponse.handleError(error, () => {
           console.error('[AUTH_UPDATE] ', error)
