@@ -11,6 +11,7 @@ import config from 'src/setup/plugin'
 import { uid } from 'quasar'
 import { getTokenFirebase } from 'modules/qnotification/_plugins/firebase.js'
 import notificationPlugin from 'modules/qnotification/_plugins/notification'
+import { sendPin, confirmPin } from './services/otp'
 
 //Request Login
 export const AUTH_REQUEST = ({ commit, dispatch, state }, authData) => {
@@ -520,8 +521,6 @@ export const SET_ORGANIZATION = ({ commit, dispatch, state }, params = {}) => {
 }
 
 
-
-
 //Refresh user Data by token
 export const AUTH_WITH_TOKEN = ({ commit, dispatch, state }, token = '') => {
   return new Promise(async (resolve, reject) => {
@@ -554,6 +553,62 @@ export const AUTH_WITH_TOKEN = ({ commit, dispatch, state }, token = '') => {
       })
     } catch (e) {
       console.error('[AUTH UPDATE] ', e)
+      reject(e)
+    }
+  })
+}
+
+
+export const OTP_SEND_PIN = ({ commit, dispatch, state }, params = {} ) => {
+  return new Promise(async (resolve, reject) => {
+    try {      
+      if(!params?.username){
+        return reject(true)
+      }
+
+      sendPin(params).then(async response => {
+        if (!response?.data) return reject(true)        
+        resolve(response?.data)
+      }).catch(error => {
+        apiResponse.handleError(error, () => {
+          console.error('[OTP_SEND_PIN] ', error)
+        })
+        reject(error)
+      })
+    } catch (e) {
+      console.error('[OTP_SEND_PIN] ', e)
+      reject(e)
+    }
+  })
+}
+
+export const OTP_CONFIRM_PIN = ({ commit, dispatch, state }, params = {} ) => {
+  console.log('OTP_CONFIRM_PIN', params)
+  return new Promise(async (resolve, reject) => {
+    try {      
+      if(!params?.username || !params?.pin){
+        return reject(true)
+      }
+
+      confirmPin(params).then(async response => {
+        if (!response?.data) return reject(true)
+        if(response?.data?.userToken){
+          const token = response.data.userToken
+          console.log(token)
+          dispatch('AUTH_WITH_TOKEN', token)
+        } else {
+          return reject(true)
+        }
+        
+        resolve(response?.data)
+      }).catch(error => {
+        apiResponse.handleError(error, () => {
+          console.error('[OTP_CONFIRM_PIN] ', error)
+        })
+        reject(true)
+      })
+    } catch (e) {
+      console.error('[OTP_CONFIRM_PIN] ', e)
       reject(e)
     }
   })

@@ -27,5 +27,7 @@ export default {
   validateChangePassword: `${urlBase}/users/password/validate-change`,
   roles: `${urlBase}/roles`,
   authProviders: `${urlBase}/auth/providers`,
-  validateEmail: `${urlBase}/auth/access-with-email`
+  validateEmail: `${urlBase}/auth/access-with-email`,
+  otpSendPin: `${urlBase}/auth/send-pin`,
+  otpConfirmPin: `${urlBase}/auth/confirm-pin`,
 }
