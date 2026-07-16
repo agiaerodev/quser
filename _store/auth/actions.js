@@ -583,7 +583,6 @@ export const OTP_SEND_PIN = ({ commit, dispatch, state }, params = {} ) => {
 }
 
 export const OTP_CONFIRM_PIN = ({ commit, dispatch, state }, params = {} ) => {
-  console.log('OTP_CONFIRM_PIN', params)
   return new Promise(async (resolve, reject) => {
     try {      
       if(!params?.username || !params?.pin){
@@ -593,9 +592,18 @@ export const OTP_CONFIRM_PIN = ({ commit, dispatch, state }, params = {} ) => {
       confirmPin(params).then(async response => {
         if (!response?.data) return reject(true)
         if(response?.data?.userToken){
-          const token = response.data.userToken
-          console.log(token)
-          dispatch('AUTH_WITH_TOKEN', token)
+          const userToken = response.data.userToken
+          const userData = response.data.userData
+          
+          axios.defaults.headers.common['Authorization'] = userToken
+          axios.defaults.params.setting.authProvider = 'local';
+          const sessionData = {
+            userData
+          }
+          await cache.set('sessionData', sessionData)//Update sessionData in cache
+          commit('AUTH_SUCCESS', sessionData)//commit userdata in store
+          commit('SET_AUTHENTICATED')
+          resolve(sessionData)
         } else {
           return reject(true)
         }
