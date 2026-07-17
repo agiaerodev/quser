@@ -542,7 +542,7 @@ export const AUTH_WITH_TOKEN = ({ commit, dispatch, state }, token = '') => {
         }
         
         await cache.set('sessionData', sessionData)//Update sessionData in cache        
-        //await dispatch('AUTH_SUCCESS')//Auth success
+        await dispatch('AUTH_SUCCESS')//Auth success
         commit('SET_AUTHENTICATED')
         resolve(sessionData)
       }).catch(error => {
@@ -582,8 +582,8 @@ export const OTP_SEND_PIN = ({ commit, dispatch, state }, params = {} ) => {
   })
 }
 
+
 export const OTP_CONFIRM_PIN = ({ commit, dispatch, state }, params = {} ) => {
-  console.log('OTP_CONFIRM_PIN', params)
   return new Promise(async (resolve, reject) => {
     try {      
       if(!params?.username || !params?.pin){
@@ -593,8 +593,20 @@ export const OTP_CONFIRM_PIN = ({ commit, dispatch, state }, params = {} ) => {
       confirmPin(params).then(async response => {
         if (!response?.data) return reject(true)
         if(response?.data?.userToken){
-          const token = response.data.userToken
-          dispatch('AUTH_WITH_TOKEN', token)
+          const userToken = response.data.userToken
+          const userData = response.data.userData
+          
+          axios.defaults.headers.common['Authorization'] = userToken
+          axios.defaults.params.setting.authProvider = 'local';
+          const sessionData = {
+            userData
+          }
+          await cache.set('sessionData', sessionData)//Update sessionData in cache
+          await commit('AUTH_SUCCESS', sessionData)//commit userdata in store
+          await dispatch('SET_PERMISSIONS')//Set Permissions
+          await dispatch('SET_SETTINGS')//Set settings
+          commit('SET_AUTHENTICATED')
+          resolve(sessionData)
         } else {
           return reject(true)
         }
@@ -612,3 +624,28 @@ export const OTP_CONFIRM_PIN = ({ commit, dispatch, state }, params = {} ) => {
     }
   })
 }
+  
+
+export const OTP_LOGOUT = ({ commit, dispatch, state } ) => {  
+  return new Promise(async (resolve, reject) => {
+    try {      
+      //Request to Logout in backend
+      if (state.authenticated) {
+        await crud.get('apiRoutes.quser.authLogout').catch(error => {
+          console.error(error)
+        })
+      }
+
+      await cache.restore(config('app.saveCache.logout'))//Reset cache
+      await cache.remove('sessionData');
+      commit('RESET') //reseet auth store
+      axios.defaults.headers.common['Authorization'] = null
+      resolve(true)
+
+    } catch (e) {
+      console.error('[OTP_LOGOUT] ', e)
+      reject(e)
+    }
+  })
+}
+
