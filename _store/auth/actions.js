@@ -608,15 +608,15 @@ export const OTP_CONFIRM_PIN = ({ commit, dispatch, state }, params = {} ) => {
           commit('SET_AUTHENTICATED')
           resolve(sessionData)
         } else {
-          return reject(true)
+          return reject(response)
         }
         
         resolve(response?.data)
       }).catch(error => {
         apiResponse.handleError(error, () => {
           console.error('[OTP_CONFIRM_PIN] ', error)
-        })
-        reject(true)
+          reject(error.response)
+        })        
       })
     } catch (e) {
       console.error('[OTP_CONFIRM_PIN] ', e)
