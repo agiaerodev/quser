@@ -598,8 +598,14 @@ export const OTP_CONFIRM_PIN = ({ commit, dispatch, state }, params = {} ) => {
           
           axios.defaults.headers.common['Authorization'] = userToken
           axios.defaults.params.setting.authProvider = 'local';
+
+          let expiresIn = new Date()
+          expiresIn = expiresIn.setUTCDate(expiresIn.getUTCDate() + 7)
+
           const sessionData = {
-            userData
+            userData,
+            userToken,
+            expiresIn
           }
           await cache.set('sessionData', sessionData)//Update sessionData in cache
           await commit('AUTH_SUCCESS', sessionData)//commit userdata in store
