@@ -17,6 +17,10 @@ export default {
       default: () => {
         return {}
       }
+    },
+    clientId: {
+      required: false,
+      default: ''
     }
   },
   emits: ['logged'],
@@ -35,7 +39,7 @@ export default {
   },
   computed: {
     clientIdGoogle() {
-      return this.$getSetting('isite::googleClientId')
+      return this?.clientId ? this.clientId : this.$getSetting('isite::googleClientId')
     },
     propsButton() {
       return {
