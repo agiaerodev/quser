@@ -23,7 +23,7 @@ export default {
       default: ''
     }
   },
-  emits: ['logged'],
+  emits: ['logged', 'logging'],
   components: {socialBtn},
   watch: {},
   mounted() {
@@ -77,6 +77,7 @@ export default {
     },
     //SignIn method
     signIn(response) {
+      this.$emit('logging')
       google.accounts.id.prompt()
     },
     //Request Login
