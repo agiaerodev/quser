@@ -33,7 +33,7 @@ export const AUTH_REQUEST = ({ commit, dispatch, state }, authData) => {
 export const AUTH_SOCIAL_NETWORK = ({ dispatch, state }, params) => {
   return new Promise((resolve, reject) => {
     let requestUrl = `apiRoutes.quser.authLoginSocialNetwork`
-    const socialData = params.socialData ? params.socialData : '';
+    const socialData = params.socialData ? params.socialData : {};
     let requestParams = { attributes: { token: params.token, socialData, device: helper.detectDevice()}, type: params.type }
     axios.defaults.params.setting.authProvider = params.type;
     axios.defaults.headers.common['Authorization'] = null;
