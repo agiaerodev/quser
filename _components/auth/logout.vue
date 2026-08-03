@@ -31,7 +31,7 @@ export default {
       const userName = localStorage.getItem('userName');
       if(userName) await storeMicrosoft().setUsername(userName);
       const socialType = localStorage.getItem('socialType');
-      if (socialType && socialType === 'microsoft') {
+      if (socialType && socialType === 'azure') {
         await storeMicrosoft().signOut();
       }
 
