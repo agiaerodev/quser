@@ -38,12 +38,12 @@ export default {
                 await storeMicrosoft().signIn();
                 if (!this.cancelLogin) {
                     await this.$store.dispatch('quserAuth/AUTH_SOCIAL_NETWORK', {
-                        type: 'azure',
+                        type: 'microsoft',
                         token: this.token,
                         socialData: this.socialData
                     }).then(response => {
                         this.$emit('logged')
-                        localStorage.setItem('socialType', 'azure');
+                        localStorage.setItem('socialType', 'microsoft');
                     }).catch(error => {
                         this.$alert.error(this.$tr('isite.cms.message.errorRequest'))
                     })
