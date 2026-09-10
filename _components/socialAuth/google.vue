@@ -23,7 +23,7 @@ export default {
       default: ''
     }
   },
-  emits: ['logged', 'logging'],
+  emits: ['logged', 'logging', 'error'],
   components: {socialBtn},
   watch: {},
   mounted() {
@@ -77,8 +77,24 @@ export default {
     },
     //SignIn method
     signIn(response) {
-      this.$emit('logging')
-      google.accounts.id.prompt()
+      try {
+        this.$emit('logging')
+        google.accounts.id.prompt((notification) => {
+          if (notification.isNotDisplayed() ||
+              notification.isSkippedMoment() ||
+              notification.isDismissedMoment()
+            ) {
+            console.warn('Google Sign-In prompt was skipped')
+            this.$emit('error')
+            return
+          }
+        })
+
+      } catch (error) {
+        console.log('error ======>', error)
+        this.$emit('error')
+      }
+
     },
     //Request Login
     login(response) {
