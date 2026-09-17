@@ -16,13 +16,11 @@ export const getUserPreferences = (params = {}, refresh = false): Promise<any> =
   })
 }
 
-
-
 export const updateOrCreateUserPreferences = (data = {}, params = {}): Promise<any> =>{
   return new Promise((resolve, reject) => {
     //Request
     const route = `${apiRoute}/update-or-create`
-    baseService.create(route, data, params).then(response => {
+    baseService.post(route, {attributes: data}).then(response => {
       resolve(response)
     }).catch(error => reject(error))
   })
