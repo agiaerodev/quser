@@ -176,7 +176,6 @@ export default function useAccountDeletionFlow() {
     clearError();
 
     try {
-      await confirmPin(username, otp);
       pin.value = otp;
       await accountDeletion(username, pin.value);
       stopCooldown();
