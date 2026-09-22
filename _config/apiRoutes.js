@@ -30,4 +30,5 @@ export default {
   validateEmail: `${urlBase}/auth/access-with-email`,
   otpSendPin: `${urlBase}/auth/send-pin`,
   otpConfirmPin: `${urlBase}/auth/confirm-pin`,
+  requestAccountDeletion: `${urlBase}/users/request/account-deletion`
 }

@@ -12,8 +12,8 @@ export default {
     icon: 'fal fa-users',
     authenticated: true,
     subHeader: {
-      refresh: true
-    }
+      refresh: true,
+    },
   },
   //User Departments
   userDepartments: {
@@ -30,8 +30,8 @@ export default {
     authenticated: true,
     subHeader: {
       refresh: true,
-      breadcrumb: ['quser.userIndex']
-    }
+      breadcrumb: ['quser.userIndex'],
+    },
   },
   //User Roles
   userRoles: {
@@ -48,8 +48,8 @@ export default {
     authenticated: true,
     subHeader: {
       refresh: true,
-      breadcrumb: ['quser.userIndex']
-    }
+      breadcrumb: ['quser.userIndex'],
+    },
   },
   //Directory
   directory: {
@@ -64,6 +64,6 @@ export default {
     authenticated: true,
     subHeader: {
       refresh: true,
-    }
+    },
   },
-}
+};

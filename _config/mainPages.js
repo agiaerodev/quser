@@ -10,7 +10,7 @@ export default {
     title: 'iprofile.cms.sidebar.login',
     icon: 'fas fa-chart-bar',
     authenticated: true,
-    authType: 'login'
+    authType: 'login',
   },
   //Logout
   logout: {
@@ -22,7 +22,7 @@ export default {
     layout: () => import('layouts/blank.vue'),
     title: 'iprofile.cms.sidebar.logout',
     icon: 'fas fa-chart-bar',
-    authType : 'logout'
+    authType: 'logout',
   },
   // Route to Register
   register: {
@@ -35,7 +35,7 @@ export default {
     title: 'iprofile.cms.sidebar.register',
     icon: 'fas fa-chart-bar',
     authenticated: true,
-    authType: 'register'
+    authType: 'register',
   },
   //reset
   resetPassword: {
@@ -47,7 +47,7 @@ export default {
     layout: () => import('layouts/blank.vue'),
     title: 'iprofile.cms.sidebar.resetPassword',
     icon: 'fas fa-chart-bar',
-    authType: 'resetPassword'
+    authType: 'resetPassword',
   },
   //Reset success
   resetPasswordComplete: {
@@ -59,7 +59,7 @@ export default {
     layout: () => import('layouts/blank.vue'),
     title: 'iprofile.cms.sidebar.resetPassword',
     icon: 'fas fa-chart-bar',
-    authType: 'resetPasswordComplete'
+    authType: 'resetPasswordComplete',
     //middleware: [auth]
   },
   //User Profile
@@ -74,8 +74,8 @@ export default {
     icon: 'fa-light fa-circle-user',
     authenticated: true,
     subHeader: {
-      refresh: true
-    }
+      refresh: true,
+    },
   },
   //Cahnge password
   changePassword: {
@@ -88,6 +88,20 @@ export default {
     title: 'iprofile.cms.sidebar.resetPassword',
     icon: 'fas fa-chart-bar',
     authType: 'changePassword',
-    authenticated: true
+    authenticated: true,
   },
-}
+  accountDeletion: {
+    permission: null,
+    activated: true,
+    path: '/auth/account-deletion',
+    name: 'quser.admin.accountDeletion',
+    page: () => import('modules/quser/_pages/accountDeletion'),
+    layout: () => import('layouts/blank.vue'),
+    title: 'Account Deletion Request',
+    icon: 'fal fa-address-book',
+    authenticated: false,
+    subHeader: {
+      refresh: true,
+    },
+  },
+};
