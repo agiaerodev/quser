@@ -150,12 +150,6 @@ const {
           </p>
         </div>
       </div>
-
-      <div
-        class="tw-border-t tw-border-slate-100 tw-px-8 tw-py-4 tw-text-center tw-text-xs tw-text-slate-400"
-      >
-        Need help? Contact our support team.
-      </div>
     </div>
   </div>
 </template>
