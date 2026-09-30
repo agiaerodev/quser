@@ -35,6 +35,9 @@ export const AUTH_SOCIAL_NETWORK = ({ dispatch, state }, params) => {
     let requestUrl = `apiRoutes.quser.authLoginSocialNetwork`
     const socialData = params.socialData ? params.socialData : {};
     let requestParams = { attributes: { token: params.token, socialData, device: helper.detectDevice()}, type: params.type }
+    if(params?.appContext){
+      requestParams.attributes.app_context = params.appContext
+    }
     axios.defaults.params.setting.authProvider = params.type;
     axios.defaults.headers.common['Authorization'] = null;
     crud.post(requestUrl, requestParams).then(async response => {

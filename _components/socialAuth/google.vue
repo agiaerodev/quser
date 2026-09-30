@@ -22,6 +22,10 @@ export default {
     clientId: {
       required: false,
       default: ''
+    }, 
+    appContext: {
+      required: false,
+      default: () => {}
     }
   },
 
@@ -227,12 +231,14 @@ export default {
           this.$tr('isite.cms.message.errorRequest')
         )
       }
-
+     
       this.$store.dispatch(
         'quserAuth/AUTH_SOCIAL_NETWORK',
         {
-          type: 'google',
-          token: token
+          type: 'google',         
+          token: token, 
+          appContext: this?.appContext || null,
+          
         }
       )
         .then(() => {
