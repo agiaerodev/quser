@@ -104,4 +104,18 @@ export default {
       refresh: true,
     },
   },
+  accountRecovery: {
+    permission: null,
+    activated: true,
+    path: '/auth/account-recovery',
+    name: 'quser.admin.accountRecovery',
+    page: () => import('modules/quser/_pages/accountRecovery'),
+    layout: () => import('layouts/blank.vue'),
+    title: 'Account Recovery Request',
+    icon: 'fal fa-address-book',
+    authenticated: false,
+    subHeader: {
+      refresh: true,
+    },
+  },
 };

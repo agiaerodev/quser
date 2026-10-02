@@ -30,5 +30,10 @@ export default {
   validateEmail: `${urlBase}/auth/access-with-email`,
   otpSendPin: `${urlBase}/auth/send-pin`,
   otpConfirmPin: `${urlBase}/auth/confirm-pin`,
-  requestAccountDeletion: `${urlBase}/users/request/account-deletion`
+  requestAccountDeletion: `${urlBase}/users/request/account-deletion`,
+  /*recovery*/
+  recoverySendOtp: `${urlBase}/auth/recovery/send-otp`,
+  recoveryValidateOtp: `${urlBase}/auth/recovery/validate-otp`,
+  recoverySendFinalOtp: `${urlBase}/auth/recovery/send-final-otp`,
+  recoveryChangePassword: `${urlBase}/auth/recovery/change-password`
 }
